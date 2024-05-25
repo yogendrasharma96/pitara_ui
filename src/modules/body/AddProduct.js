@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import Editor from '../components/Editor';
 import SelectBox from '../components/SelectBox';
 import TagSelectBox from '../components/TagSelectBox';
@@ -8,7 +9,9 @@ import SubType from '../body/ProductDetails';
 
 const AddProduct = () => {
 
-  const [subType, setSubType] = useState([<SubType />]);
+  const [subType, setSubType] = useState([<SubType key={0}/>]);
+
+  const product=useSelector(store=>store.addProducts);
 
   const handleAddSubTypes = () => {
     setSubType([...subType, <SubType key={subType.length} />]);
@@ -16,18 +19,25 @@ const AddProduct = () => {
 
   const handleRemove = (index) => {
     console.log(index)
-    console.log(subType);
-    setSubType(subType.filter((_, i) => (
-      i !== index
-    )
-    ));
+    const list=[...subType];
+    list.splice(index,1);
+    setSubType(list);
+    console.log(list);
+  }
+
+  const handleSubmit=()=>{
+    console.log(product.productName);
+    console.log(product.productDescription);
+    console.log(product.productCategory);
+console.log(product.productTags);
+console.log(product.productDetails);
   }
   return (
     <div>
       <div className='m-6'>
         <div className='mb-6'>
           <h3 className='font-semibold mb-3'>Product Title</h3>
-          <TextBox placeholder={'Product Name'} type={'text'} css={'rounded-md p-2 w-1/3 border border-solid border-gray-400 font-serif font-normal'}></TextBox>
+          <TextBox  placeholder={'Product Name'} type={'text'} css={'rounded-md p-2 w-1/3 border border-solid border-gray-400 font-serif font-normal'}></TextBox>
         </div>
         <div className='mb-6'>
           <h3 className='font-semibold mb-3'>Product Description</h3>
@@ -35,7 +45,7 @@ const AddProduct = () => {
         </div>
         <div className='mb-6'>
           <h3 className='font-semibold mb-3'>Category</h3>
-          <SelectBox css={'basic-single w-1/3 border border-solid border-gray-400 rounded-md'} placeholder={'Categories...'} option={colourOptions}></SelectBox>
+          <SelectBox type={'category'} css={'basic-single w-1/3 border border-solid border-gray-400 rounded-md'} placeholder={'Categories...'} option={colourOptions}></SelectBox>
         </div>
         <div className='mb-6'>
           <h3 className='font-semibold mb-3'>Add Tags</h3>
@@ -54,7 +64,7 @@ const AddProduct = () => {
           }
         </div>
       </div>
-
+            <button onClick={handleSubmit}>Submit</button>
     </div>
   )
 }
