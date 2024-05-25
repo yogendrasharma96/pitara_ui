@@ -10,6 +10,7 @@ const addProductSlice = createSlice({
         productTags: null,
         productDetails: [
             {
+                id: null,
                 productSize: null,
             }
         ]
@@ -27,13 +28,33 @@ const addProductSlice = createSlice({
         addProductTags: (state, action) => {
             state.productTags = action.payload;
         },
+        addProductSubArray: (state) => {
+            state.productDetails = [...state.productDetails, { id: null, productSize: null }];
+        },
         addProductSize: (state, action) => {
-            state.productDetails[0].productSize = action.payload;
+            // state.productDetails.map(product => {
+            //     if(product.id==null){
+            //     product.id = action.payload.id;
+            //     product.productSize = action.payload.productSize;
+            //     }else {
+            //         if(product.id===action.payload.id)
+            //         product.productSize = action.payload.productSize;
+            //     }
+            //     return product;
+            // }
+            // )
+            state.productDetails = state.productDetails.map(product => {
+                if (product.id === action.payload.id || product.id === null) {
+                  product.id = action.payload.id;
+                  product.productSize = action.payload.productSize;
+                }
+                return product;
+              });
         }
     }
 });
 
 
-export const { addProductName, addProductDesc, addProductCat, addProductTags, addProductSize } = addProductSlice.actions;
+export const { addProductName, addProductDesc, addProductCat, addProductTags, addProductSize, addProductSubArray } = addProductSlice.actions;
 
 export default addProductSlice.reducer;

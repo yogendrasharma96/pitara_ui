@@ -11,8 +11,9 @@ const SelectBox = (props) => {
   const handleSelect = (e) => {
     if(props.type==='category')
     dispatch(addProductCat(e));
-    if(props.type==='size')
-    dispatch(addProductSize(e));
+    else if(props.uuid){
+      dispatch(addProductSize({id:props.uuid,productSize:e}));
+    }
 
   }
 

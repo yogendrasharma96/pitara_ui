@@ -5,13 +5,13 @@ import TextBox from '../components/TextBox';
 import ImageUpload from '../components/ImageUpload';
 import SelectBox from '../components/SelectBox';
 
-const SubType = () => {
+const SubType = ({id}) => {
 
     return (
         <div className='flex' id='sub'>
             <div className='m-2'>
                 <h5>Size</h5>
-                <SelectBox type={'size'} css={'basic-single w-32 border border-solid border-gray-400 rounded-md'} option={size} placeholder={'Size...'}></SelectBox>
+                <SelectBox uuid={id} css={'basic-single w-32 border border-solid border-gray-400 rounded-md'} option={size} placeholder={'Size...'}></SelectBox>
             </div>
             <div className='m-2'>
                 <h5>Color</h5>
