@@ -1,13 +1,19 @@
 import React, { useState } from 'react'
 import { SketchPicker } from "react-color";
+import { useDispatch } from 'react-redux';
+import { addProductDetails } from '../redux/addProductSlice';
+import { defaultColorPickerClr } from '../utils/constants';
 
-const ColorPicker = () => {
-    const [sketchPickerColor, setSketchPickerColor] = useState({
-        r: "241",
-        g: "112",
-        b: "19",
-        a: "1",
-    });
+const ColorPicker = ({ uuid }) => {
+
+    const dispatch = useDispatch();
+
+    const handleColorSelect = (e) => {
+        setSketchPickerColor(e);
+        dispatch(addProductDetails({ id: uuid, productColor: e }));
+    }
+
+    const [sketchPickerColor,setSketchPickerColor] = useState(defaultColorPickerClr);
 
     const [open, setOpen] = useState(false);
     const { r, g, b, a } = sketchPickerColor;
@@ -30,7 +36,7 @@ const ColorPicker = () => {
             ></div>
             {open && <SketchPicker
                 onChange={(color) => {
-                    setSketchPickerColor(color.rgb);
+                    handleColorSelect(color.rgb);
                 }}
                 className="absolute z-50 mt-2"
                 color={sketchPickerColor}
@@ -39,4 +45,4 @@ const ColorPicker = () => {
     )
 }
 
-export default ColorPicker
+export default ColorPicker;

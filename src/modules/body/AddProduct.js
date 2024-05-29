@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Editor from '../components/Editor';
 import SelectBox from '../components/SelectBox';
@@ -6,32 +6,38 @@ import TagSelectBox from '../components/TagSelectBox';
 import { colourOptions } from '../utils/constants';
 import TextBox from '../components/TextBox';
 import SubType from '../body/ProductDetails';
-import { v4 as uuidv4 } from 'uuid'; 
-import { addProductSubArray } from '../redux/addProductSlice';
+import { v4 as uuidv4 } from 'uuid';
+import { addFirstProductId, addProductSubArray, removeProductSubArray } from '../redux/addProductSlice';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { handleFormSubmit } from '../utils/validation';
 
 const AddProduct = () => {
   const [subTypeData, setSubTypeData] = useState([{ id: uuidv4() }]);
 
-  const dispatch=useDispatch();
+  const dispatch = useDispatch();
 
   const product = useSelector((store) => store.addProducts);
+  useEffect(() => {
+    dispatch(addFirstProductId(subTypeData[0].id));
+  }, [dispatch, subTypeData]);
+
+
 
   const handleAddSubTypes = () => {
-    setSubTypeData([...subTypeData, { id: uuidv4() }]);
-    dispatch(addProductSubArray());
+    const uuid = { id: uuidv4() };
+    setSubTypeData([...subTypeData, uuid]);
+    dispatch(addProductSubArray(uuid));
   };
 
   const handleRemove = (index) => {
-    const list = subTypeData.filter((_, i) => i !== index);
+    const list = subTypeData.filter((val) => val.id !== index);
     setSubTypeData(list);
+    dispatch(removeProductSubArray(index));
   };
 
-   const handleSubmit = () => {
-    console.log(product.productName);
-    console.log(product.productDescription);
-    console.log(product.productCategory);
-    console.log(product.productTags);
-    console.log(product.productDetails);
+  const handleSubmit = () => {
+    handleFormSubmit(product);
   }
 
   return (
@@ -67,11 +73,11 @@ const AddProduct = () => {
             <div key={data.id} className='flex'>
               <SubType id={data.id} />
               <div className='ml-8 mt-2'>
-                <button className='p-2 cursor-pointer mt-6' onClick={handleAddSubTypes}>
+                {subTypeData.length - 1 === index && <button className='p-2 cursor-pointer mt-6' onClick={handleAddSubTypes}>
                   ➕
-                </button>
-                {index !== 0 && (
-                  <button className='p-2 cursor-pointer mt-6' onClick={() => handleRemove(index)}>
+                </button>}
+                {subTypeData.length !== 1 && (
+                  <button className='p-2 cursor-pointer mt-6' onClick={() => handleRemove(data.id)}>
                     ➖
                   </button>
                 )}
@@ -80,7 +86,13 @@ const AddProduct = () => {
           ))}
         </div>
       </div>
-      <button onClick={handleSubmit}>Submit</button>
+      <div className='mr-8 w-screen flex justify-end'>
+        <button className='p-3 cursor-pointer text-amber-50 rounded-md bg-slate-500 mr-64' onClick={handleSubmit}>Submit</button>
+        <ToastContainer
+          // toastClassName={() => "relative flex p-1 min-h-10 rounded-md justify-between overflow-hidden cursor-pointer bg-slate-700"}
+          //   bodyClassName={() => "text-sm font-white font-med block p-3"} 
+          style={{ marginTop: '55px' }} />
+      </div>
     </div>
   );
 };

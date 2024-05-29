@@ -2,28 +2,28 @@ import React from 'react'
 import Select from 'react-select';
 import { customStyles } from '../utils/constants';
 import { useDispatch } from 'react-redux';
-import { addProductCat, addProductSize } from '../redux/addProductSlice';
+import { addProductCat, addProductDetails } from '../redux/addProductSlice';
 
-const SelectBox = (props) => {
+const SelectBox = ({uuid, css, placeholder, option }) => {
 
   const dispatch = useDispatch();
 
   const handleSelect = (e) => {
-    if(props.type==='category')
-    dispatch(addProductCat(e));
-    else if(props.uuid){
-      dispatch(addProductSize({id:props.uuid,productSize:e}));
+    if (uuid) {
+      dispatch(addProductDetails({ id: uuid, productSize: e }));
+    } else {
+      dispatch(addProductCat(e));
     }
 
   }
 
   return (
     <Select
-      className={props.css}
-      placeholder={props.placeholder}
+      className={css}
+      placeholder={placeholder}
       classNamePrefix="select"
       styles={customStyles}
-      options={props.option}
+      options={option}
       onChange={handleSelect}
     />
   )

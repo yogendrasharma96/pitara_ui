@@ -57,3 +57,21 @@ export const formats = [
   'bold', 'italic', 'underline',
   'align', 'link', 'image'
 ];
+
+
+export const defaultColorPickerClr={
+  r: "241",
+  g: "112",
+  b: "19",
+  a: "1",
+};
+
+export const defaultProductDetails={
+  id: null,
+  productSize: null,
+  productColor: defaultColorPickerClr,
+  productQuantity: null,
+  productPrice:null,
+  productDiscount:null,
+  productImages:[]
+}

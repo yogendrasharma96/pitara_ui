@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import ImageUploading from 'react-images-uploading';
+import { useDispatch } from 'react-redux';
+import { addProductDetails } from '../redux/addProductSlice';
 
-const ImageUpload = () => {
+const ImageUpload = ({ uuid }) => {
     const [images, setImages] = useState([]);
     const maxNumber = 5;
 
+    const dispatch = useDispatch();
     const onChange = (imageList, addUpdateIndex) => {
         setImages(imageList);
+        dispatch(addProductDetails({ id: uuid, productImages: imageList }))
     };
 
     return (

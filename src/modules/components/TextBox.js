@@ -1,13 +1,21 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { addProductName } from '../redux/addProductSlice';
+import { addProductDetails, addProductName } from '../redux/addProductSlice';
 
-const TextBox = ({ css, placeholder, type }) => {
+const TextBox = ({ uuid, css, placeholder, type }) => {
 
-  const dispatch=useDispatch();
+  const dispatch = useDispatch();
 
   const handleInputChange = (e) => {
+    if (placeholder === 'Product Name')
       dispatch(addProductName(e.target.value));
+    else if (placeholder === 'Quantity...')
+      dispatch(addProductDetails({ id: uuid, productQuantity: e.target.value }));
+    else if (placeholder === 'Price...')
+      dispatch(addProductDetails({ id: uuid, productPrice: e.target.value }));
+    else if (placeholder === 'Discount...')
+      dispatch(addProductDetails({ id: uuid, productDiscount: e.target.value }));
+
   }
 
   return (

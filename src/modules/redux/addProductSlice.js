@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { defaultProductDetails } from "../utils/constants";
 
 
 const addProductSlice = createSlice({
@@ -9,10 +10,7 @@ const addProductSlice = createSlice({
         productCategory: null,
         productTags: null,
         productDetails: [
-            {
-                id: null,
-                productSize: null,
-            }
+            defaultProductDetails
         ]
     },
     reducers: {
@@ -28,33 +26,35 @@ const addProductSlice = createSlice({
         addProductTags: (state, action) => {
             state.productTags = action.payload;
         },
-        addProductSubArray: (state) => {
-            state.productDetails = [...state.productDetails, { id: null, productSize: null }];
+        addFirstProductId: (state, action) => {
+            state.productDetails[0].id = action.payload;
         },
-        addProductSize: (state, action) => {
-            // state.productDetails.map(product => {
-            //     if(product.id==null){
-            //     product.id = action.payload.id;
-            //     product.productSize = action.payload.productSize;
-            //     }else {
-            //         if(product.id===action.payload.id)
-            //         product.productSize = action.payload.productSize;
-            //     }
-            //     return product;
-            // }
-            // )
+        addProductSubArray: (state, action) => {
+            const newProductDetails = { ...defaultProductDetails, id: action.payload.id };
+            state.productDetails = [...state.productDetails, newProductDetails
+            ];
+        },
+        removeProductSubArray: (state, action) => {
+            state.productDetails = state.productDetails.filter((val) => val.id !== action.payload);
+        },
+        addProductDetails: (state, action) => {
             state.productDetails = state.productDetails.map(product => {
-                if (product.id === action.payload.id || product.id === null) {
-                  product.id = action.payload.id;
-                  product.productSize = action.payload.productSize;
+                if (product.id === action.payload.id) {
+                    product.id = action.payload.id;
+                    product.productSize = action.payload.productSize == null ? product.productSize : action.payload.productSize;
+                    product.productColor = action.payload.productColor === undefined ? product.productColor : action.payload.productColor;
+                    product.productQuantity = action.payload.productQuantity == null ? product.productQuantity : action.payload.productQuantity;
+                    product.productPrice = action.payload.productPrice == null ? product.productPrice : action.payload.productPrice;
+                    product.productDiscount = action.payload.productDiscount == null ? product.productDiscount : action.payload.productDiscount;
+                    product.productImages = action.payload.productImages == null ? product.productImages : action.payload.productImages;
                 }
                 return product;
-              });
+            });
         }
     }
 });
 
 
-export const { addProductName, addProductDesc, addProductCat, addProductTags, addProductSize, addProductSubArray } = addProductSlice.actions;
+export const { addProductName, addProductDesc, addProductCat, addProductTags, addProductDetails, addProductSubArray, removeProductSubArray, addFirstProductId } = addProductSlice.actions;
 
 export default addProductSlice.reducer;
