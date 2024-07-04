@@ -73,5 +73,5 @@ export const defaultProductDetails={
   productQuantity: null,
   productPrice:null,
   productDiscount:null,
-  productImages:[]
+  productImages: null
 }

@@ -10,11 +10,11 @@ const TextBox = ({ uuid, css, placeholder, type }) => {
     if (placeholder === 'Product Name')
       dispatch(addProductName(e.target.value));
     else if (placeholder === 'Quantity...')
-      dispatch(addProductDetails({ id: uuid, productQuantity: e.target.value }));
+      dispatch(addProductDetails({ id: uuid, productQuantity: parseInt(e.target.value) }));
     else if (placeholder === 'Price...')
-      dispatch(addProductDetails({ id: uuid, productPrice: e.target.value }));
+      dispatch(addProductDetails({ id: uuid, productPrice: parseFloat(e.target.value) }));
     else if (placeholder === 'Discount...')
-      dispatch(addProductDetails({ id: uuid, productDiscount: e.target.value }));
+      dispatch(addProductDetails({ id: uuid, productDiscount: parseFloat(e.target.value) }));
 
   }
 

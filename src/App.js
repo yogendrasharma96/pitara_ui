@@ -1,17 +1,29 @@
-import { Provider } from 'react-redux';
+import { Outlet } from 'react-router-dom';
 import './App.css';
-import AddProduct from './modules/body/AddProduct';
 import ResponsiveAppBar from './modules/header/ResponsiveAppBar';
-import appStore from './modules/redux/appStore';
+import SideBar from './modules/header/SideBar';
+import { useSelector } from 'react-redux';
+
 
 function App() {
+  const showSideBar = useSelector((store) => store.sideBar);
   return (
-    <Provider store={appStore}>
-      <div>
-        <ResponsiveAppBar></ResponsiveAppBar>
-        <AddProduct></AddProduct>
-      </div>
-      </Provider>
+
+    <div>
+        <ResponsiveAppBar />
+        <div className='flex'>
+         <SideBar/>
+         {/* <div
+          className={`transition-all duration-300 flex-grow ${
+            showSideBar ? 'ml-0' : 'ml-0'
+          }`}
+        > */}
+          <div className="p-4">
+            <Outlet />
+          </div>
+          </div>
+        {/* </div> */}
+    </div>
   );
 }
 

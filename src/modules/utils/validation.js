@@ -45,19 +45,23 @@ export const handleFormSubmit = (product) => {
     if (isValidProduct) {
         const areDetailsValid = product.productDetails.every((details, index) => validateProductDetails(details, index));
         if (areDetailsValid) {
-            postData(product);
+            return true;
         }
+        return false;
     }
+    toaster('Something Went Wrong!!');
+    return false;
 
 };
 
 
 const postData = async (data) => {
     try {
-      const response = await axios.post('https://api.example.com/post-endpoint', data);
+        console.log(data)
+      const response = await axios.post('http://localhost:8080/api/v1/product', data);
       console.log('Response:', response.data);
     } catch (error) {
-        toaster('Something Went Wrong!!');
+        
       console.error('Error:', error.response.data);
     }
   };

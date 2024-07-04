@@ -10,9 +10,9 @@ const SelectBox = ({uuid, css, placeholder, option }) => {
 
   const handleSelect = (e) => {
     if (uuid) {
-      dispatch(addProductDetails({ id: uuid, productSize: e }));
+      dispatch(addProductDetails({ id: uuid, productSize: e.value }));
     } else {
-      dispatch(addProductCat(e));
+      dispatch(addProductCat(e.value));
     }
 
   }

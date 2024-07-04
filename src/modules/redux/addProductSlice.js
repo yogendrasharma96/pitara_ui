@@ -37,6 +37,9 @@ const addProductSlice = createSlice({
         removeProductSubArray: (state, action) => {
             state.productDetails = state.productDetails.filter((val) => val.id !== action.payload);
         },
+        removeProduct:(state)=>{
+            state=null;
+        },
         addProductDetails: (state, action) => {
             state.productDetails = state.productDetails.map(product => {
                 if (product.id === action.payload.id) {
@@ -47,6 +50,7 @@ const addProductSlice = createSlice({
                     product.productPrice = action.payload.productPrice == null ? product.productPrice : action.payload.productPrice;
                     product.productDiscount = action.payload.productDiscount == null ? product.productDiscount : action.payload.productDiscount;
                     product.productImages = action.payload.productImages == null ? product.productImages : action.payload.productImages;
+                    console.log(product.productImages);
                 }
                 return product;
             });

@@ -10,7 +10,7 @@ const TagSelectBox = (props) => {
   const dispatch = useDispatch();
 
   const handleSelect = (e) => {
-    dispatch(addProductTags(e));
+    dispatch(addProductTags(e.map(tag=>tag.value)));
   }
   
 

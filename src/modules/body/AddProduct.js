@@ -37,12 +37,16 @@ const AddProduct = () => {
   };
 
   const handleSubmit = () => {
-    handleFormSubmit(product);
+    const status=handleFormSubmit(product);
+    if(status){
+      
+    }
+
   }
 
   return (
-    <div>
-      <div className='m-6'>
+    <div className='m-4'>
+      <div>
         <div className='mb-6'>
           <h3 className='font-semibold mb-3'>Product Title</h3>
           <TextBox
@@ -86,8 +90,8 @@ const AddProduct = () => {
           ))}
         </div>
       </div>
-      <div className='mr-8 w-screen flex justify-end'>
-        <button className='p-3 cursor-pointer text-amber-50 rounded-md bg-slate-500 mr-64' onClick={handleSubmit}>Submit</button>
+      <div className='flex justify-end'>
+        <button className='p-3 cursor-pointer text-amber-50 rounded-md bg-slate-500' onClick={handleSubmit}>Submit</button>
         <ToastContainer
           // toastClassName={() => "relative flex p-1 min-h-10 rounded-md justify-between overflow-hidden cursor-pointer bg-slate-700"}
           //   bodyClassName={() => "text-sm font-white font-med block p-3"} 

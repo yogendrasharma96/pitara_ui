@@ -1,76 +1,50 @@
-import * as React from 'react';
-import { useState } from 'react';
-
-
-
-
+import { faBars, faUser } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React from 'react'
+import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { toggleSideBar } from '../redux/sideBarSlice';
 
 const ResponsiveAppBar = () => {
-    const [isNavOpen, setIsNavOpen] = useState(false);
-    const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
-    const pages = ['Add Products', 'Show Products', 'Blog'];
-    const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+    const dispatch = useDispatch();
 
-    const handleToggleNavMenu = () => {
-        setIsNavOpen(!isNavOpen);
-    };
+    const handleToggleSideBar = () => {
+        dispatch(toggleSideBar());
+    }
 
-    const handleToggleUserMenu = () => {
-        setIsUserMenuOpen(!isUserMenuOpen);
-    };
 
     return (
-        <header className="bg-gray-800 text-white p-4">
-            <div className="container mx-auto flex justify-between items-center">
-                <div className="flex items-center">
-                    <span className="text-xl font-bold mr-4">LOGO</span>
-                    <div className="hidden md:flex space-x-4">
-                        {pages.map((page) => (
-                            <a key={page} href={`#${page.toLowerCase().replace(/ /g, '-')}`} className="hover:underline">
-                                {page}
-                            </a>
-                        ))}
-                    </div>
-                </div>
-                <div className="flex items-center">
-                    <div className="md:hidden">
-                        <button onClick={handleToggleNavMenu} className="focus:outline-none">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7" />
-                            </svg>
-                        </button>
-                    </div>
-                    <div className="relative">
-                        <button onClick={handleToggleUserMenu} className="focus:outline-none">
-                            <img className="h-8 w-8 rounded-full" src="https://via.placeholder.com/150" alt="User Avatar" />
-                        </button>
-                        {isUserMenuOpen && (
-                            <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-20">
-                                {settings.map((setting) => (
-                                    <a key={setting} href={`#${setting.toLowerCase()}`} className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
-                                        {setting}
-                                    </a>
-                                ))}
-                            </div>
-                        )}
-                    </div>
-                </div>
+        <div>
+            <div className='bg-gradient-to-t from-blue-500 via-green-500 to-purple-500'>
+                <ul className='flex p-2 items-center'>
+                    <li className='p-4 cursor-pointer'>
+                        <FontAwesomeIcon icon={faBars} size="" onClick={handleToggleSideBar} />
+                    </li>
+                    <li className='w-16 '>
+                        <img src={require('../../pitara.png')} alt='logo' />
+                    </li>
+                    <li className='p-4' >
+                        <Link to={"/"}><h4>Home</h4></Link>
+                    </li>
+                    <li className='p-4'>
+                        <Link to={"/add"}><h4>Add Products</h4></Link>
+                    </li>
+                    <li className='p-4'>
+                        <Link to={"/edit"}> <h4>Edit Products</h4></Link>
+                    </li>
+                    <li className='p-4'>
+                        <Link to={"/show"}><h4>Show Products</h4></Link>
+                    </li>
+                    <li className='p-4 ml-auto  '>
+                        <Link to={"/signUp"}><FontAwesomeIcon icon={faUser} size="m" /></Link>
+                    </li>
+                </ul>
             </div>
-            {isNavOpen && (
-                <nav className="md:hidden">
-                    <div className="space-y-1">
-                        {pages.map((page) => (
-                            <a key={page} href={`#${page.toLowerCase().replace(/ /g, '-')}`} className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
-                                {page}
-                            </a>
-                        ))}
-                    </div>
-                </nav>
-            )}
-        </header>
-    );
-};
-
+        </div>
+    )
+}
 
 export default ResponsiveAppBar;
+
+
