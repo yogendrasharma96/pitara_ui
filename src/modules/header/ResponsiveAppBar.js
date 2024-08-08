@@ -16,7 +16,7 @@ const ResponsiveAppBar = () => {
 
     return (
         <div>
-            <div className='bg-gradient-to-t from-blue-500 via-green-500 to-purple-500'>
+            <div className=''>
                 <ul className='flex p-2 items-center'>
                     <li className='p-4 cursor-pointer'>
                         <FontAwesomeIcon icon={faBars} size="" onClick={handleToggleSideBar} />

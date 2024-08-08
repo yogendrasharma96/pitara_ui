@@ -1,64 +1,62 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { defaultProductDetails } from "../utils/constants";
-
+const initialState = {
+    id: null,
+    productName: null,
+    productDescription: null,
+    productCategory: null,
+    productTags: null,
+    productColor: [],
+    productFabric: [],
+    productPattern: [],
+    productOccasion: [],
+    productWashCare: [],
+    productBlouse: null,
+    productSizeQuantity: null,
+    productMrp: null,
+    productSP: null,
+    productShippingDays:null,
+    productCoupon:null,
+    productSale:null,
+    productReturn:null,
+    productImages:[]
+};
 
 const addProductSlice = createSlice({
     name: "addProducts",
-    initialState: {
-        productName: null,
-        productDescription: null,
-        productCategory: null,
-        productTags: null,
-        productDetails: [
-            defaultProductDetails
-        ]
-    },
+    initialState,
     reducers: {
-        addProductName: (state, action) => {
-            state.productName = action.payload;
+        addProduct: (state, action) => {
+            return { ...state, ...action.payload };
         },
-        addProductDesc: (state, action) => {
-            state.productDescription = action.payload;
+        removeProduct: () => {
+            return initialState;
         },
-        addProductCat: (state, action) => {
-            state.productCategory = action.payload;
-        },
-        addProductTags: (state, action) => {
-            state.productTags = action.payload;
-        },
-        addFirstProductId: (state, action) => {
-            state.productDetails[0].id = action.payload;
-        },
-        addProductSubArray: (state, action) => {
-            const newProductDetails = { ...defaultProductDetails, id: action.payload.id };
-            state.productDetails = [...state.productDetails, newProductDetails
-            ];
-        },
-        removeProductSubArray: (state, action) => {
-            state.productDetails = state.productDetails.filter((val) => val.id !== action.payload);
-        },
-        removeProduct:(state)=>{
-            state=null;
-        },
-        addProductDetails: (state, action) => {
-            state.productDetails = state.productDetails.map(product => {
-                if (product.id === action.payload.id) {
-                    product.id = action.payload.id;
-                    product.productSize = action.payload.productSize == null ? product.productSize : action.payload.productSize;
-                    product.productColor = action.payload.productColor === undefined ? product.productColor : action.payload.productColor;
-                    product.productQuantity = action.payload.productQuantity == null ? product.productQuantity : action.payload.productQuantity;
-                    product.productPrice = action.payload.productPrice == null ? product.productPrice : action.payload.productPrice;
-                    product.productDiscount = action.payload.productDiscount == null ? product.productDiscount : action.payload.productDiscount;
-                    product.productImages = action.payload.productImages == null ? product.productImages : action.payload.productImages;
-                    console.log(product.productImages);
-                }
-                return product;
-            });
+        updateProduct: (state, action) => {
+            const val=action.payload;
+            state.id = val.id;
+            state.productName = val.productName;
+            state.productDescription = val.productDescription;
+            state.productCategory = val.productCategory;
+            state.productTags = val.productTags;
+            state.productSizeQuantity = val.productSizeQuantity;
+            state.productColor = val.productColor;
+            state.productFabric = val.productFabric;
+            state.productPattern = val.productPattern;
+            state.productOccasion = val.productOccasion;
+            state.productWashCare = val.productWashCare;
+            state.productBlouse = val.productBlouse;
+            state.productMrp = val.productMrp;
+            state.productSP = val.productSP;
+            state.productShippingDays = val.productShippingDays;
+            state.productCoupon = val.productCoupon;
+            state.productSale = val.productSale;
+            state.productReturn = val.productReturn;
+            state.productImages = val.productImages;
         }
     }
 });
 
 
-export const { addProductName, addProductDesc, addProductCat, addProductTags, addProductDetails, addProductSubArray, removeProductSubArray, addFirstProductId } = addProductSlice.actions;
+export const { addProductName, addProductDesc, addProductCat, addKeyPair,addProductTags, addProductDetails, addProductSubArray, removeProductSubArray, addFirstProductId, removeProduct, updateProduct, addProduct } = addProductSlice.actions;
 
 export default addProductSlice.reducer;

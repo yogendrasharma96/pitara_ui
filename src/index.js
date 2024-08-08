@@ -10,6 +10,7 @@ import appStore from './modules/redux/appStore';
 import SignUp from './modules/auth/SignUp';
 import ConfirmationSignUp from './modules/auth/ConfirmationSignUp';
 import Login from './modules/auth/Login';
+import EditProduct from './modules/body/EditProduct';
 const appRoute=createBrowserRouter([
 {
   path:'/',
@@ -22,6 +23,10 @@ const appRoute=createBrowserRouter([
     {
       path:'add',
       element: <AddProduct/>
+    },
+    {
+      path:'edit',
+      element: <EditProduct/>
     },
     {
       path:'signUp',

@@ -85,3 +85,42 @@ export const loginApi = async (data) => {
     return { success: false, message: 'Something Went Wrong' };
   }
 };
+
+export const getProductApi = async (data) => {
+  try {
+    console.log(data);
+    const response = await axios.post('http://localhost:8080/api/v1/product/list', data );
+    if (response.data?.errors?.hasError) {
+      return { success: false, message: response.data.errors?.errorDetail?.errorMsg };
+    } else {
+      return {
+        success: true,
+        message: response.data.data?.content
+      };
+    }
+  } catch (error) {
+    if (error.response?.data?.errors?.hasError) {
+      return { success: false, message: error.response.data.errors?.errorDetail?.errorMsg };
+    }
+    return { success: false, message: 'Something Went Wrong' };
+  }
+};
+
+export const getProductConfigApi = async () => {
+  try {
+    const response = await axios.get('http://localhost:8080/api/v1/product/details');
+    if (response.data?.errors?.hasError) {
+      return { success: false, message: response.data.errors?.errorDetail?.errorMsg };
+    } else {
+      return {
+        success: true,
+        message: response.data?.data
+      };
+    }
+  } catch (error) {
+    if (error.response?.data?.errors?.hasError) {
+      return { success: false, message: error.response.data.errors?.errorDetail?.errorMsg };
+    }
+    return { success: false, message: 'Something Went Wrong' };
+  }
+};

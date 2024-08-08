@@ -11,34 +11,53 @@ export const colourOptions= [
     { value: 'silver', label: 'Silver', color: '#666666' },
   ]; 
 
-  export const size= [
-    { value: 'Extra Large', label: 'XL'},
-    { value: 'blue', label: 'L' },
-    { value: 'purple', label: 'S' }
+  export const tags= [
+    { value: 'ocean'},
+    { value: 'blue' },
+    { value: 'purple' },
+    { value: 'red' }
   ]; 
 
+  export const size= [
+    { value: 'Extra Large', label: 'XL'},
+    { value: 'Large', label: 'L' },
+    { value: 'Small', label: 'S' }
+  ]; 
+
+  export const color= [
+    { value: 'Blue', label: 'BLUE'},
+    { value: 'Green', label: 'GREEN' },
+    { value: 'Yellow', label: 'YELLOW' }
+  ];
+
   export const customStyles = {
-    option: (provided) => ({
+    option: (provided,state) => ({
         ...provided,
         textAlign: 'center',
+        color:state.data.code
     }),
-    singleValue: (provided) => ({
+    singleValue: (provided,state) => ({
         ...provided,
         textAlign: 'center',
-        width: '100%'  // Ensures the text is centered within the select box
+        width: '100%',
+        color:state.data.code
     }),
-    // menu: (provided) => ({
+    multiValueLabel: (provided, state) => ({
+      ...provided,
+      color: state.data.code, // Dynamically set the color for multi-value labels
+    }),
+    // menu: (provided,state) => ({
     //     ...provided,
     //     textAlign: 'center',
     // }),
-    // control: (provided) => ({
+    // control: (provided,state) => ({
     //     ...provided,
     //     textAlign: 'center',
     // }),
     placeholder: (provided) => ({
         ...provided,
-        textAlign: 'center',
-        width: '100%',  // Ensures the placeholder text is centered
+        width: '100%',
+        color : '#9c9a9a'
     }),
 };
 
@@ -69,7 +88,7 @@ export const defaultColorPickerClr={
 export const defaultProductDetails={
   id: null,
   productSize: null,
-  productColor: defaultColorPickerClr,
+  productColor: null,
   productQuantity: null,
   productPrice:null,
   productDiscount:null,

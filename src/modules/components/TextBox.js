@@ -1,25 +1,51 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
-import { addProductDetails, addProductName } from '../redux/addProductSlice';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addProduct } from '../redux/addProductSlice';
 
-const TextBox = ({ uuid, css, placeholder, type }) => {
+const TextBox = ({ css, placeholder, type, desc }) => {
 
   const dispatch = useDispatch();
+  const [val, setVal] = useState('');
+
+  const currVal = useSelector(store => store.addProducts);
+
+  useEffect(() => {
+    if (desc === 'name') {
+      setVal(currVal.productName || '');
+    }
+    else if (desc === 'mrp') {
+      setVal(currVal.productMrp || '');
+    }
+    else if (desc === 'sp') {
+      setVal(currVal.productSP || '');
+    }
+    else if (desc === 'ship') {
+      setVal(currVal.productShippingDays || '');
+    }
+  }, [currVal, desc]);
 
   const handleInputChange = (e) => {
-    if (placeholder === 'Product Name')
-      dispatch(addProductName(e.target.value));
-    else if (placeholder === 'Quantity...')
-      dispatch(addProductDetails({ id: uuid, productQuantity: parseInt(e.target.value) }));
-    else if (placeholder === 'Price...')
-      dispatch(addProductDetails({ id: uuid, productPrice: parseFloat(e.target.value) }));
-    else if (placeholder === 'Discount...')
-      dispatch(addProductDetails({ id: uuid, productDiscount: parseFloat(e.target.value) }));
-
-  }
+    const value = e.target.value;
+    if (desc === 'name') {
+      dispatch(addProduct({ productName: value }));
+      setVal(value);
+    }
+    else if (desc === 'mrp') {
+      dispatch(addProduct({ productMrp: value }));
+      setVal(value);
+    }
+    else if (desc === 'sp') {
+      dispatch(addProduct({ productSP: value }));
+      setVal(value);
+    }
+    else if (desc === 'ship') {
+      dispatch(addProduct({ productShippingDays: value }));
+      setVal(value);
+    }
+  };
 
   return (
-    <input className={css} placeholder={placeholder} type={type} onChange={handleInputChange}></input>
+    <input className={css} placeholder={placeholder} type={type} onChange={handleInputChange} value={val || ''}></input>
   )
 }
 

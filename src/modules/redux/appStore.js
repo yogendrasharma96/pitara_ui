@@ -5,7 +5,7 @@ import sideBarSlice from "./sideBarSlice";
 const appStore = configureStore({
     reducer: {
         addProducts: addProductSlice,
-        sideBar: sideBarSlice,
+        sideBar: sideBarSlice
     }
 })
 
