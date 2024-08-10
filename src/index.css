@@ -12,21 +12,6 @@ code {
     monospace;
 }
 
-/* .custom-checkbox {
-  @apply w-6 h-6 appearance-none border-2 border-black cursor-pointer;
-}
-
-.custom-checkbox:checked {
-  @apply text-white;
-}
-
-.custom-checkbox:checked::after {
-  content: '✔';
-  transform: translate(-50%, -50%);
-  font-size: 14px;
-  color: black;
-} */
-
 .custom-checkbox {
   @apply w-4 h-4 appearance-none border border-black cursor-pointer relative;
 }
@@ -39,6 +24,10 @@ code {
   content: '✔';
   @apply absolute text-black text-sm inset-0 flex items-center justify-center;
 }
+
+
+
+
 
 @tailwind base;
 @tailwind components;
