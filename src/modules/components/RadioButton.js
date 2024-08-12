@@ -6,7 +6,6 @@ const RadioButton = ({ value, content }) => {
 
     const handleCheckboxChange = (e) => {
         setIsChecked(e.target.checked);
-        console.log(e.target.value);
     };
     return (
         <div className='flex items-center space-x-2'>

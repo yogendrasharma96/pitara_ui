@@ -1,37 +1,29 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import HeaderFilter from './HeaderFilter';
 import { useDispatch, useSelector } from 'react-redux';
-import { addFilter } from '../redux/addFilterSlice';
+import { addFilter, removeFilter } from '../redux/addFilterSlice';
 
 const CommonBar = ({ data, title }) => {
-  const [open, setOpen] = useState(false);
-  const [selectedItems, setSelectedItems] = useState([]);
+  const [open, setOpen] = useState(true);
   const dispatch = useDispatch();
+  const key = title.toLowerCase();
   const currVal = useSelector((store) => store.addFilters);
 
+  const selectedItems = currVal
+    .filter(filter => filter[key])
+    .map(filter => filter[key]?.value);
+
   const handleClick = (x) => {
-    const key = title.toLowerCase();
-    const existingFilter = currVal[key] || [];
-
-    let updatedFilter;
-    let updatedSelectedItems;
-
     if (selectedItems.includes(x.value)) {
-      // If the item is already selected, remove it
-      updatedFilter = existingFilter.filter(item => item.value !== x.value);
-      updatedSelectedItems = selectedItems.filter(item => item !== x.value);
+      const existingFilterIndex = currVal.findIndex(filter => filter[key]?.['value'] === x.value);
+      dispatch(removeFilter(existingFilterIndex));
     } else {
-      // Otherwise, add it to the selected items
-      updatedFilter = [...existingFilter, x];
-      updatedSelectedItems = [...selectedItems, x.value];
+      dispatch(addFilter({ [key]: x }));
     }
-
-    setSelectedItems(updatedSelectedItems);
-    dispatch(addFilter({ [key]: updatedFilter }));
   };
 
   return (
-    <div className="bg-white rounded-lg">
+    <div className="bg-white rounded-lg mb-6">
       <HeaderFilter open={open} setOpen={setOpen} title={title} />
       {open && (
         <div className="flex flex-wrap gap-2">

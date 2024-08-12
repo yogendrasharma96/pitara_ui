@@ -1,21 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { Range, getTrackBackground } from 'react-range';
 import HeaderFilter from './HeaderFilter';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addFilter } from '../redux/addFilterSlice';
 
-const PriceRangeSlider = ({ min, max, step, onPriceChange }) => {
+const PriceRangeSlider = ({ min, max, step }) => {
     const [values, setValues] = useState([min, max]);
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(true);
     const dispatch = useDispatch();
-
+    const currVal = useSelector((store) => store.addFilters);
     useEffect(() => {
-        dispatch(addFilter({ minPrice: values[0] }));
-        dispatch(addFilter({ maxPrice: values[1] }));
-    }, [dispatch, values]);
+        if (!currVal.find(x => x.hasOwnProperty('price'))) {
+            setValues([1000, 20000])
+        }
+    }, [currVal]);
+
+    const handleChange = (values) => {
+        setValues(values);
+        dispatch(addFilter({ price: values[0] + '-' + values[1] }));
+    };
 
     return (
-        <div className="bg-white rounded-lg">
+        <div className="bg-white rounded-lg mb-6">
             <HeaderFilter open={open} setOpen={setOpen} title={'Price'} />
             {open && (
                 <div className="py-0 px-4 mt-0">
@@ -24,8 +30,7 @@ const PriceRangeSlider = ({ min, max, step, onPriceChange }) => {
                         step={step}
                         min={min}
                         max={max}
-                        onChange={(values) => setValues(values)}
-                        onFinalChange={onPriceChange}
+                        onChange={(values) => handleChange(values)}
                         renderTrack={({ props, children }) => (
                             <div
                                 onMouseDown={props.onMouseDown}

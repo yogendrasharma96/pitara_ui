@@ -17,8 +17,8 @@ const ProductCard = ({ product }) => {
   }
 
   return (
-    <div className='bg-gray-400 h-96 mb-8'>
-     <img className="w-full h-96" src={showImage} onMouseOver={()=>setShowImage(images[1])} onMouseOut={()=>setShowImage(images[0])} onClick={editProduct} alt={'Loading'} />
+    <div className='h-[100%]'>
+     <img className="w-[90%] h-[92%]" src={showImage} onMouseOver={()=>setShowImage(images[1])} onMouseOut={()=>setShowImage(images[0])} onClick={editProduct} alt={'Loading'} />
      <div className='p-2 flex flex-col items-center font-normal'>
       <span >{product.productName}</span>
       <span className={product.productSP? 'line-through':''}>Rs. {product.productMrp}</span>
